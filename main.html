@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Help Guy — Learn how to actually use AI</title>
+<meta name="description" content="Personal one-to-one help to understand and use modern AI tools in real life.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Theme Variables ── */
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max-w: 1120px;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-elevated: #FFFFFF;
+  --bg-subtle: #F2F1EE;
+  --bg-card: #FFFFFF;
+  --text-primary: #1A1A18;
+  --text-secondary: #6B6B66;
+  --text-tertiary: #9C9C96;
+  --border: #E8E7E4;
+  --border-subtle: #F0EFEC;
+  --accent: #1A1A18;
+  --accent-soft: rgba(26,26,24,0.06);
+  --accent-hover: #333330;
+  --node-color: rgba(26,26,24,0.08);
+  --line-color: rgba(26,26,24,0.04);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  --card-shadow-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
+  --scroll-bg: rgba(26,26,24,0.03);
+  --invert: 0;
+}
+
+[data-theme="dark"] {
+  --bg: #111110;
+  --bg-elevated: #1A1A18;
+  --bg-subtle: #1E1E1C;
+  --bg-card: #1E1E1C;
+  --text-primary: #F0EFEC;
+  --text-secondary: #9C9C96;
+  --text-tertiary: #6B6B66;
+  --border: #2A2A28;
+  --border-subtle: #222220;
+  --accent: #F0EFEC;
+  --accent-soft: rgba(240,239,236,0.06);
+  --accent-hover: #D4D3D0;
+  --node-color: rgba(240,239,236,0.06);
+  --line-color: rgba(240,239,236,0.03);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+  --card-shadow-hover: 0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+  --scroll-bg: rgba(240,239,236,0.02);
+  --invert: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.5s var(--ease-out), color 0.5s var(--ease-out);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Navigation ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 24px;
+  transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+}
+
+.nav.scrolled {
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.nav-logo span {
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.25s var(--ease-out);
+}
+
+.theme-toggle:hover {
+  border-color: var(--text-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-book {
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 8px 18px;
+  border-radius: 100px;
+  transition: opacity 0.2s;
+}
+
+.nav-book:hover { opacity: 0.85; }
+
+/* ── Canvas Background ── */
+#neural-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Section Basics ── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 64px;
+}
+
+.hero-content {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero-text {
+  max-width: 520px;
+}
+
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+}
+
+.hero-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s var(--ease-out) 0.35s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.hero-sub {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 420px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.8s var(--ease-out) 0.5s forwards;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.8s var(--ease-out) 0.65s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 13px 28px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+}
+
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.btn-primary svg { width: 14px; height: 14px; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-primary);
+  padding: 13px 28px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-tertiary);
+  transform: translateY(-1px);
+}
+
+/* ── Hero Animation ── */
+.hero-demo {
+  opacity: 0;
+  animation: fadeIn 1s var(--ease-out) 0.8s forwards;
+}
+
+.demo-window {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.demo-topbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.demo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.demo-body {
+  padding: 24px;
+  min-height: 300px;
+}
+
+.demo-prompt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.demo-prompt-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.typing-text {
+  font-family: var(--font-body);
+  min-height: 1.4em;
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--text-tertiary);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.demo-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.demo-card {
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  transition: all 0.5s var(--ease-out);
+}
+
+.demo-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.demo-card-icon {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.demo-card-title {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.demo-card-desc {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  line-height: 1.45;
+}
+
+/* ── About ── */
+.about {
+  padding: 140px 0;
+}
+
+.about-inner {
+  max-width: 640px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 32px;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--border);
+}
+
+.about-text {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.about-text span {
+  color: var(--text-tertiary);
+}
+
+/* ── What I Help With ── */
+.services {
+  padding: 100px 0 140px;
+}
+
+.services-header {
+  margin-bottom: 64px;
+}
+
+.services h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.services-sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 420px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.service-item {
+  background: var(--bg-card);
+  padding: 32px 28px;
+  transition: background 0.3s var(--ease-out);
+}
+
+.service-item:hover {
+  background: var(--bg-subtle);
+}
+
+.service-icon {
+  font-size: 22px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.service-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.service-desc {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* ── Scroll Story ── */
+.scroll-story {
+  position: relative;
+  height: 500vh; /* longer scroll = more cinematic pacing */
+}
+
+.scroll-story-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--scroll-bg);
+}
+
+.scroll-phrase {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 24px;
+  will-change: opacity, transform, filter;
+  /* No CSS transition — all values driven directly by JS for scroll-locked feel */
+}
+
+.scroll-phrase em {
+  font-style: italic;
+  color: var(--text-tertiary);
+}
+
+.scroll-phrase.final {
+  font-size: clamp(36px, 6vw, 72px);
+}
+
+/* Scroll hint indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  will-change: opacity;
+}
+
+.scroll-hint-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.scroll-hint-line {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.scroll-hint-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--text-tertiary);
+  animation: scrollPulse 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+/* Progress track */
+.scroll-progress-track {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  will-change: opacity;
+}
+
+.scroll-progress-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.scroll-progress-dot.active {
+  background: var(--text-primary);
+  transform: scale(1.5);
+}
+
+/* ── Booking ── */
+.booking {
+  padding: 140px 0;
+}
+
+.booking-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.booking-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.booking-left p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 36px;
+  max-width: 400px;
+}
+
+.session-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.session-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+}
+
+.session-card:hover {
+  border-color: var(--text-tertiary);
+  box-shadow: var(--card-shadow);
+}
+
+.session-card:focus-visible,
+.session-card.selected {
+  border-color: var(--text-primary);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.session-info-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.session-info-detail {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.session-price {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text-primary);
+}
+
+.booking-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.form-sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-bottom: 28px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 7px;
+  letter-spacing: 0.02em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--text-tertiary);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-submit {
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px 28px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.form-submit:hover { opacity: 0.85; }
+
+/* ── Footer ── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 0;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-left {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--text-primary);
+}
+
+/* ── Fade-in on scroll ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .hero-demo { max-width: 500px; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .booking-inner { grid-template-columns: 1fr; gap: 48px; }
+  .nav-links a:not(.nav-book) { display: none; }
+}
+
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero-buttons { flex-direction: column; }
+  .hero-buttons .btn-secondary { text-align: center; justify-content: center; }
+  .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Neural Canvas Background -->
+<canvas id="neural-canvas"></canvas>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">AI Help Guy <span>.co.uk</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#booking">Book</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#booking" class="nav-book">Book a session</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-label">One-to-one sessions</div>
+        <h1>Learn how to <em>actually</em> use AI</h1>
+        <p class="hero-sub">Personal one-to-one help to understand and use modern AI tools in real life.</p>
+        <div class="hero-buttons">
+          <a href="#booking" class="btn-primary">
+            Book a session
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#services" class="btn-secondary">See how it works</a>
+        </div>
+      </div>
+      <div class="hero-demo">
+        <div class="demo-window">
+          <div class="demo-topbar">
+            <div class="demo-dot"></div>
+            <div class="demo-dot"></div>
+            <div class="demo-dot"></div>
+          </div>
+          <div class="demo-body">
+            <div class="demo-prompt">
+              <svg class="demo-prompt-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              <span class="typing-text" id="typingText"></span><span class="typing-cursor" id="typingCursor"></span>
+            </div>
+            <div class="demo-cards" id="demoCards">
+              <div class="demo-card" id="card0">
+                <div class="demo-card-icon">📋</div>
+                <div class="demo-card-title">Day-by-day itinerary</div>
+                <div class="demo-card-desc">3 days in Rome with key sights</div>
+              </div>
+              <div class="demo-card" id="card1">
+                <div class="demo-card-icon">🍝</div>
+                <div class="demo-card-title">Restaurant picks</div>
+                <div class="demo-card-desc">Local favourites, not tourist traps</div>
+              </div>
+              <div class="demo-card" id="card2">
+                <div class="demo-card-icon">🧳</div>
+                <div class="demo-card-title">Packing list</div>
+                <div class="demo-card-desc">Essentials for the season</div>
+              </div>
+              <div class="demo-card" id="card3">
+                <div class="demo-card-icon">✈️</div>
+                <div class="demo-card-title">Travel plan</div>
+                <div class="demo-card-desc">Flights, transfers &amp; timing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner reveal">
+      <div class="section-label">About</div>
+      <p class="about-text">
+        Hi, I'm Charlie. I'm a Computer Science student at Durham, <span>on track for a First,</span> and I spend a lot of time working with AI tools. I've noticed that many people are curious about AI but don't really know where to start. <span>That's what I help with</span> — showing people how these tools actually work and how they can be genuinely useful in everyday life.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <div class="section-label">What I can help with</div>
+      <h2>Practical AI skills<br>you can use today</h2>
+      <p class="services-sub">Everything taught simply, with real examples you'll actually use.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-item">
+        <span class="service-icon">💬</span>
+        <div class="service-title">Using ChatGPT effectively</div>
+        <div class="service-desc">Go beyond basic questions and get consistently useful answers.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🧭</span>
+        <div class="service-title">Understanding AI tools</div>
+        <div class="service-desc">Claude, Perplexity, Gemini — what they do and when to use each.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">✍️</span>
+        <div class="service-title">Writing better prompts</div>
+        <div class="service-desc">Small changes in how you ask can completely change what you get.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">📧</span>
+        <div class="service-title">Emails &amp; writing</div>
+        <div class="service-desc">Draft, refine, and edit text faster without losing your voice.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🔍</span>
+        <div class="service-title">Research &amp; planning</div>
+        <div class="service-desc">Use AI to gather, compare, and organise information properly.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">💡</span>
+        <div class="service-title">Brainstorming ideas</div>
+        <div class="service-desc">AI as a creative thinking partner for projects and decisions.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">🛠️</span>
+        <div class="service-title">Learning new tools</div>
+        <div class="service-desc">Hands-on walkthrough of any AI tool you're curious about.</div>
+      </div>
+      <div class="service-item">
+        <span class="service-icon">⚡</span>
+        <div class="service-title">Simple AI workflows</div>
+        <div class="service-desc">Build small, useful routines that save you real time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scroll Storytelling -->
+<section class="scroll-story" id="scroll-story">
+  <div class="scroll-story-sticky">
+    <div class="scroll-phrase" id="phrase0">AI can feel <em>confusing</em></div>
+    <div class="scroll-phrase" id="phrase1">But it can be incredibly <em>useful</em></div>
+    <div class="scroll-phrase" id="phrase2">If you know how to use it</div>
+    <div class="scroll-phrase final" id="phrase3">That's where I help.</div>
+    <div class="scroll-hint" id="scrollHint">
+      <div class="scroll-hint-text">Scroll</div>
+      <div class="scroll-hint-line"></div>
+    </div>
+    <div class="scroll-progress-track" id="scrollProgress">
+      <div class="scroll-progress-dot" data-step="0"></div>
+      <div class="scroll-progress-dot" data-step="1"></div>
+      <div class="scroll-progress-dot" data-step="2"></div>
+      <div class="scroll-progress-dot" data-step="3"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Booking -->
+<section class="booking" id="booking">
+  <div class="container">
+    <div class="booking-inner">
+      <div class="booking-left reveal">
+        <div class="section-label">Get started</div>
+        <h2>Book a session</h2>
+        <p>One-to-one online sessions, tailored to exactly what you want to learn. No jargon, no pressure — just practical help.</p>
+        <div class="session-options">
+          <div class="session-card" data-session-type="standard" role="button" tabindex="0" aria-label="Select standard session">
+            <div class="session-info">
+              <div class="session-info-title">Standard session</div>
+              <div class="session-info-detail">1 hour · Online via Zoom</div>
+            </div>
+            <div class="session-price">£40</div>
+          </div>
+          <div class="session-card" data-session-type="custom" role="button" tabindex="0" aria-label="Select custom length session">
+            <div class="session-info">
+              <div class="session-info-title">Custom length</div>
+              <div class="session-info-detail">Flexible · Just ask</div>
+            </div>
+            <div class="session-price" style="font-size:14px; font-family:var(--font-body); color:var(--text-secondary)">Get in touch</div>
+          </div>
+        </div>
+      </div>
+      <div class="booking-form reveal">
+        <div class="form-title">Send an enquiry</div>
+        <div class="form-sub">I'll get back to you within 24 hours.</div>
+        <form id="enquiryForm" onsubmit="return false;">
+          <input type="hidden" id="sessionType" name="sessionType" value="standard">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First name</label>
+              <input id="firstName" name="firstName" type="text" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last name</label>
+              <input id="lastName" name="lastName" type="text" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="helpTopic">What would you like help with?</label>
+            <select id="helpTopic" name="helpTopic" required>
+              <option value="" disabled selected>Choose a topic</option>
+              <option>Using ChatGPT</option>
+              <option>Understanding different AI tools</option>
+              <option>Writing better prompts</option>
+              <option>AI for emails &amp; writing</option>
+              <option>Research &amp; planning</option>
+              <option>Building AI workflows</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="form-group" id="customLengthGroup" hidden>
+            <label for="customLength">How long would you like the session to be?</label>
+            <input id="customLength" name="customLength" type="text" placeholder="e.g. 90 minutes">
+          </div>
+          <div class="form-group">
+            <label for="extraInfo">Anything else? (optional)</label>
+            <textarea id="extraInfo" name="extraInfo" placeholder="Tell me a bit about what you'd like to learn…"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send enquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">&copy; 2025 AI Help Guy. aihelpguy.co.uk</div>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#booking">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Theme Toggle ──
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const sunIcon = toggle.querySelector('.sun-icon');
+const moonIcon = toggle.querySelector('.moon-icon');
+
+function setTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  if (theme === 'dark') {
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = 'block';
+  } else {
+    sunIcon.style.display = 'block';
+    moonIcon.style.display = 'none';
+  }
+}
+
+const savedTheme = localStorage.getItem('theme') || 
+  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+setTheme(savedTheme);
+
+toggle.addEventListener('click', () => {
+  setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// ── Nav Scroll ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Neural Canvas ──
+const canvas = document.getElementById('neural-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [];
+const NODE_COUNT = 50;
+const CONNECTION_DIST = 180;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+for (let i = 0; i < NODE_COUNT; i++) {
+  nodes.push({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    vx: (Math.random() - 0.5) * 0.25,
+    vy: (Math.random() - 0.5) * 0.25,
+    r: Math.random() * 1.5 + 0.5
+  });
+}
+
+function drawNeural() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const nodeColor = isDark ? 'rgba(240,239,236,0.07)' : 'rgba(26,26,24,0.07)';
+  const lineColor = isDark ? 'rgba(240,239,236,0.025)' : 'rgba(26,26,24,0.025)';
+
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+    a.x += a.vx;
+    a.y += a.vy;
+    if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
+    if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
+
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < CONNECTION_DIST) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = lineColor;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+    ctx.fillStyle = nodeColor;
+    ctx.fill();
+  }
+  requestAnimationFrame(drawNeural);
+}
+drawNeural();
+
+// ── Hero Typing Animation ──
+const prompts = [
+  { text: "Plan a trip to Rome", delay: 2500 },
+  { text: "Write a cover letter", delay: 2500 },
+  { text: "Summarise this article", delay: 2500 },
+  { text: "Help me brainstorm ideas", delay: 2500 }
+];
+
+const cardSets = [
+  [
+    { icon: "📋", title: "Day-by-day itinerary", desc: "3 days in Rome with key sights" },
+    { icon: "🍝", title: "Restaurant picks", desc: "Local favourites, not tourist traps" },
+    { icon: "🧳", title: "Packing list", desc: "Essentials for the season" },
+    { icon: "✈️", title: "Travel plan", desc: "Flights, transfers & timing" }
+  ],
+  [
+    { icon: "📄", title: "Professional draft", desc: "Tailored to the role" },
+    { icon: "✨", title: "Key strengths", desc: "Highlights your best qualities" },
+    { icon: "🎯", title: "Personalised opening", desc: "Specific to the company" },
+    { icon: "📝", title: "Final polish", desc: "Ready to send" }
+  ],
+  [
+    { icon: "📰", title: "Key points", desc: "Main arguments in brief" },
+    { icon: "💡", title: "Insights", desc: "What matters most" },
+    { icon: "📊", title: "Data highlights", desc: "Numbers at a glance" },
+    { icon: "🔗", title: "Related topics", desc: "Further reading" }
+  ],
+  [
+    { icon: "🎯", title: "Project angles", desc: "5 creative directions" },
+    { icon: "🧩", title: "Combinations", desc: "Unexpected pairings" },
+    { icon: "📈", title: "Growth ideas", desc: "Quick wins to try" },
+    { icon: "💬", title: "Discussion points", desc: "Questions to explore" }
+  ]
+];
+
+const typingEl = document.getElementById('typingText');
+const cursorEl = document.getElementById('typingCursor');
+const cards = [0,1,2,3].map(i => document.getElementById('card' + i));
+let promptIndex = 0;
+
+function updateCards(setIndex) {
+  const set = cardSets[setIndex];
+  cards.forEach((card, i) => {
+    card.classList.remove('visible');
+    card.querySelector('.demo-card-icon').textContent = set[i].icon;
+    card.querySelector('.demo-card-title').textContent = set[i].title;
+    card.querySelector('.demo-card-desc').textContent = set[i].desc;
+  });
+}
+
+function typePrompt(text, cb) {
+  typingEl.textContent = '';
+  let i = 0;
+  function next() {
+    if (i < text.length) {
+      typingEl.textContent += text[i];
+      i++;
+      setTimeout(next, 40 + Math.random() * 30);
+    } else {
+      setTimeout(cb, 400);
+    }
+  }
+  next();
+}
+
+function showCards(cb) {
+  cards.forEach((card, i) => {
+    setTimeout(() => card.classList.add('visible'), i * 150);
+  });
+  setTimeout(cb, 600 + cards.length * 150);
+}
+
+function runCycle() {
+  updateCards(promptIndex);
+  typePrompt(prompts[promptIndex].text, () => {
+    showCards(() => {
+      setTimeout(() => {
+        cards.forEach(c => c.classList.remove('visible'));
+        setTimeout(() => {
+          promptIndex = (promptIndex + 1) % prompts.length;
+          runCycle();
+        }, 500);
+      }, prompts[promptIndex].delay);
+    });
+  });
+}
+
+runCycle();
+
+// ── Scroll Reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// ── Scroll Storytelling (refined) ──
+const storySection = document.getElementById('scroll-story');
+const phrases = [0,1,2,3].map(i => document.getElementById('phrase' + i));
+const scrollHint = document.getElementById('scrollHint');
+const progressDots = document.querySelectorAll('.scroll-progress-dot');
+
+// Easing function for smoother interpolation within each phase
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+function easeInCubic(t) { return t * t * t; }
+
+/*
+  Layout of scroll progress (0 → 1) across 500vh of scroll:
+  
+  Each phrase gets a zone. Within each zone:
+    - enter phase  (fade in, slide up, unblur)
+    - hold phase   (fully visible, no change)
+    - exit phase   (fade out, slide up further, blur)
+  
+  First phrase starts partially visible so the section never looks blank.
+  Last phrase holds without exiting so it lingers.
+*/
+
+const PHRASE_COUNT = phrases.length;
+const ZONE = 1 / PHRASE_COUNT;          // 0.25 each
+const ENTER = 0.25;                      // fraction of zone for enter
+const HOLD  = 0.45;                      // fraction of zone for hold
+const EXIT  = 0.30;                      // fraction of zone for exit
+
+function updateScrollStory() {
+  const rect = storySection.getBoundingClientRect();
+  const totalH = storySection.offsetHeight - window.innerHeight;
+  const rawProgress = -rect.top / totalH;
+  const progress = Math.max(0, Math.min(1, rawProgress));
+
+  // Scroll hint: fade out as user starts scrolling
+  if (scrollHint) {
+    const hintOpacity = Math.max(0, 1 - progress * 8);
+    scrollHint.style.opacity = hintOpacity;
+    scrollHint.style.pointerEvents = hintOpacity < 0.1 ? 'none' : '';
+  }
+
+  phrases.forEach((el, i) => {
+    const zoneStart = i * ZONE;
+    const enterEnd   = zoneStart + ZONE * ENTER;
+    const holdEnd    = zoneStart + ZONE * (ENTER + HOLD);
+    const exitEnd    = zoneStart + ZONE;
+
+    let opacity = 0;
+    let yOffset = 24;    // px — enter from below
+    let blur = 6;        // px
+
+    if (progress < zoneStart) {
+      // Before this phrase's zone — hidden below
+      opacity = 0;
+      yOffset = 24;
+      blur = 6;
+    } else if (progress <= enterEnd) {
+      // Enter phase
+      const t = easeOutCubic((progress - zoneStart) / (enterEnd - zoneStart));
+      opacity = t;
+      yOffset = 24 * (1 - t);
+      blur = 6 * (1 - t);
+    } else if (progress <= holdEnd) {
+      // Hold phase — fully visible
+      opacity = 1;
+      yOffset = 0;
+      blur = 0;
+    } else if (i === PHRASE_COUNT - 1) {
+      // Last phrase: hold indefinitely, don't exit
+      opacity = 1;
+      yOffset = 0;
+      blur = 0;
+    } else if (progress <= exitEnd) {
+      // Exit phase
+      const t = easeInCubic((progress - holdEnd) / (exitEnd - holdEnd));
+      opacity = 1 - t;
+      yOffset = -16 * t; // exit upward
+      blur = 5 * t;
+    } else {
+      // Past this phrase's zone — hidden above
+      opacity = 0;
+      yOffset = -16;
+      blur = 5;
+    }
+
+    // First phrase: start partially visible even at progress 0
+    // so the section never appears blank on entry
+    if (i === 0 && progress <= zoneStart) {
+      // Section just entered viewport but scroll hasn't really started
+      // Show first phrase at partial opacity as an invitation
+      const preT = Math.max(0, Math.min(1, (rawProgress + 0.02) / 0.02));
+      opacity = 0.35 + 0.65 * easeOutCubic(Math.max(0, (progress) / (ZONE * ENTER)));
+      yOffset = 24 * (1 - Math.max(0, progress / (ZONE * ENTER)));
+      blur = 6 * (1 - Math.max(0, progress / (ZONE * ENTER)));
+      if (rawProgress <= 0) {
+        opacity = 0.35;
+        yOffset = 6;
+        blur = 1;
+      }
+    }
+
+    el.style.opacity = opacity;
+    el.style.transform = `translateY(${yOffset}px)`;
+    el.style.filter = blur > 0.1 ? `blur(${blur}px)` : 'none';
+
+    // Update progress dots
+    if (progressDots[i]) {
+      const isActive = opacity > 0.5;
+      progressDots[i].classList.toggle('active', isActive);
+    }
+  });
+
+  // Progress track visibility — fade in/out with section
+  const trackEl = document.getElementById('scrollProgress');
+  if (trackEl) {
+    const trackFade = progress > 0.01 && progress < 0.98 ? 1 : 0;
+    trackEl.style.opacity = trackFade;
+  }
+}
+
+// Use rAF-throttled scroll for buttery performance
+let scrollTicking = false;
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(() => {
+      updateScrollStory();
+      scrollTicking = false;
+    });
+    scrollTicking = true;
+  }
+}, { passive: true });
+
+// Initial call so it renders correctly if section is already in view
+updateScrollStory();
+
+// ── Smooth scroll for anchor links ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── Booking form behaviour ──
+const enquiryForm = document.getElementById('enquiryForm');
+const sessionTypeInput = document.getElementById('sessionType');
+const customLengthGroup = document.getElementById('customLengthGroup');
+const customLengthInput = document.getElementById('customLength');
+const sessionCards = document.querySelectorAll('.session-card[data-session-type]');
+
+function setSessionType(type) {
+  sessionTypeInput.value = type;
+
+  sessionCards.forEach(card => {
+    const isSelected = card.dataset.sessionType === type;
+    card.classList.toggle('selected', isSelected);
+    card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+  });
+
+  if (type === 'custom') {
+    customLengthGroup.hidden = false;
+    customLengthInput.required = true;
+  } else {
+    customLengthGroup.hidden = true;
+    customLengthInput.required = false;
+    customLengthInput.value = '';
+  }
+}
+
+sessionCards.forEach(card => {
+  const selectCard = () => {
+    setSessionType(card.dataset.sessionType);
+  };
+
+  card.addEventListener('click', selectCard);
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      selectCard();
+    }
+  });
+});
+
+enquiryForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  if (!enquiryForm.reportValidity()) return;
+
+  const formData = new FormData(enquiryForm);
+  const sessionType = formData.get('sessionType');
+  const customLength = (formData.get('customLength') || '').toString().trim();
+  const topic = (formData.get('helpTopic') || '').toString();
+  const extraInfo = (formData.get('extraInfo') || '').toString().trim();
+  const fullName = `${formData.get('firstName')} ${formData.get('lastName')}`.trim();
+  const sessionLabel = sessionType === 'custom' ? 'Custom length session' : 'Standard session';
+
+  const bodyLines = [
+    'Hello,',
+    '',
+    'I would like to enquire about a session.',
+    '',
+    `Session type: ${sessionLabel}`,
+    sessionType === 'custom' ? `Requested length: ${customLength}` : 'Requested length: 1 hour',
+    `Name: ${fullName}`,
+    `Email: ${formData.get('email')}`,
+    `Topic: ${topic}`,
+    extraInfo ? `Additional details: ${extraInfo}` : 'Additional details: None provided',
+    '',
+    'Thanks,'
+  ];
+
+  const subject = `${sessionLabel} enquiry`;
+  const mailtoUrl = `mailto:inquiries@aihelpguy.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+  window.location.href = mailtoUrl;
+});
+
+setSessionType('standard');
+</script>
+</body>
+</html>
