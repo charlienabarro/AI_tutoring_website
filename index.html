@@ -24,36 +24,36 @@
 }
 
 [data-theme="light"] {
-  --bg: #FAFAF8;
-  --bg-elevated: #FFFFFF;
-  --bg-subtle: #F2F1EE;
-  --bg-card: #FFFFFF;
-  --text-primary: #1A1A18;
-  --text-secondary: #6B6B66;
-  --text-tertiary: #9C9C96;
-  --border: #E8E7E4;
-  --border-subtle: #F0EFEC;
-  --accent: #1A1A18;
-  --accent-soft: rgba(26,26,24,0.06);
-  --accent-hover: #333330;
-  --node-color: rgba(26,26,24,0.08);
-  --line-color: rgba(26,26,24,0.04);
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
-  --card-shadow-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
-  --scroll-bg: rgba(26,26,24,0.03);
+  --bg: transparent;
+  --bg-elevated: rgba(255,255,255,0.06);
+  --bg-subtle: rgba(255,255,255,0.04);
+  --bg-card: rgba(255,255,255,0.05);
+  --text-primary: #F0EFEC;
+  --text-secondary: #9C9C96;
+  --text-tertiary: #6B6B66;
+  --border: rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.05);
+  --accent: #F0EFEC;
+  --accent-soft: rgba(240,239,236,0.06);
+  --accent-hover: #D4D3D0;
+  --node-color: rgba(240,239,236,0.06);
+  --line-color: rgba(240,239,236,0.03);
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+  --card-shadow-hover: 0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+  --scroll-bg: rgba(240,239,236,0.02);
   --invert: 0;
 }
 
 [data-theme="dark"] {
-  --bg: #111110;
-  --bg-elevated: #1A1A18;
-  --bg-subtle: #1E1E1C;
-  --bg-card: #1E1E1C;
+  --bg: transparent;
+  --bg-elevated: rgba(255,255,255,0.04);
+  --bg-subtle: rgba(255,255,255,0.03);
+  --bg-card: rgba(255,255,255,0.04);
   --text-primary: #F0EFEC;
   --text-secondary: #9C9C96;
   --text-tertiary: #6B6B66;
-  --border: #2A2A28;
-  --border-subtle: #222220;
+  --border: rgba(255,255,255,0.08);
+  --border-subtle: rgba(255,255,255,0.05);
   --accent: #F0EFEC;
   --accent-soft: rgba(240,239,236,0.06);
   --accent-hover: #D4D3D0;
@@ -73,11 +73,10 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--bg);
+  background: #08080a;
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
-  transition: background 0.5s var(--ease-out), color 0.5s var(--ease-out);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -94,10 +93,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 .nav.scrolled {
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  background: rgba(8, 8, 10, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .nav-inner {
@@ -141,17 +140,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  transition: all 0.25s var(--ease-out);
+  display: none; /* Hidden — entire site uses space theme */
 }
 
 .theme-toggle:hover {
@@ -176,8 +165,8 @@ a { color: inherit; text-decoration: none; }
 
 .nav-book:hover { opacity: 0.85; }
 
-/* ── Canvas Background ── */
-#neural-canvas {
+/* ── Starfield Background (global) ── */
+#starfield-bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -185,6 +174,7 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  background: #08080a;
 }
 
 /* ── Section Basics ── */
@@ -217,14 +207,10 @@ section {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 170, 110, 0.12), transparent 70%);
+  background: radial-gradient(circle, rgba(100, 140, 220, 0.06), transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: -1;
-}
-
-[data-theme="dark"] .hero::before {
-  background: radial-gradient(circle, rgba(200, 170, 110, 0.06), transparent 70%);
 }
 
 .hero-content {
@@ -510,40 +496,10 @@ section {
   padding: 0;
   overflow: hidden;
   position: relative;
-  background: #08080a;
-}
-
-/* Gradient fade from site bg INTO space */
-.services::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 160px;
-  background: linear-gradient(to bottom, var(--bg), #08080a);
-  z-index: 2;
-  pointer-events: none;
-}
-/* Gradient fade FROM space back to site bg */
-.services::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 160px;
-  background: linear-gradient(to top, var(--bg), #08080a);
-  z-index: 2;
-  pointer-events: none;
 }
 
 .starfield-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  display: none; /* Global starfield handles this now */
 }
 
 .services-inner {
@@ -598,137 +554,193 @@ section {
 }
 
 /* Planet scene — image-based */
+/* ── Solar System — Individual Orbits ── */
 .planet-scene {
   position: relative;
   width: 100%;
-  max-width: 780px;
+  max-width: 920px;
+  aspect-ratio: 16 / 10;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 0 100px;
 }
 
-/* Planet image wrapper — holds the img + glow/shadow layers */
-.planet-img-wrap {
-  position: relative;
-  width: clamp(280px, 55vw, 480px);
-  aspect-ratio: 1;
-  flex-shrink: 0;
-}
-
-/* The actual planet photo */
-.planet-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 50%;
-  display: block;
-  position: relative;
-  z-index: 2;
-  /* Subtle slow rotation for life */
-  animation: planetDrift 120s linear infinite;
-}
-@keyframes planetDrift {
-  to { transform: rotate(360deg); }
-}
-
-/* Atmosphere glow — outer ring of light */
-.planet-img-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -8%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(100, 160, 255, 0.12) 40%,
-    rgba(100, 160, 255, 0.04) 60%,
-    transparent 72%
-  );
-  filter: blur(20px);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Shadow/terminator — darkens right side for depth */
-.planet-img-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    110deg,
-    transparent 30%,
-    transparent 50%,
-    rgba(0,0,0,0.2) 70%,
-    rgba(0,0,0,0.45) 100%
-  );
-  z-index: 3;
-  pointer-events: none;
-}
-
-/* Big ambient glow behind planet — gives it that floating-in-space feel */
-.planet-ambient {
+/* ── The Sun — Blazing star ── */
+.sun-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 130%;
-  height: 130%;
+  width: clamp(60px, 9vw, 90px);
+  aspect-ratio: 1;
   transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.sun-wrap img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: radial-gradient(
-    ellipse,
-    rgba(100, 140, 220, 0.06) 0%,
-    rgba(100, 140, 220, 0.02) 40%,
-    transparent 70%
-  );
-  filter: blur(40px);
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 3;
+}
+/* Inner corona — tight bright glow */
+.sun-glow-1 {
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 100, 0.5) 15%, rgba(255, 180, 50, 0.2) 35%, transparent 65%);
+  filter: blur(8px);
+  z-index: 2;
+  pointer-events: none;
+  animation: sunPulse 5s ease-in-out infinite;
+}
+/* Mid corona — warm spread */
+.sun-glow-2 {
+  position: absolute;
+  inset: -100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 60, 0.18) 10%, rgba(255, 160, 30, 0.06) 30%, transparent 55%);
+  filter: blur(18px);
+  z-index: 1;
+  pointer-events: none;
+  animation: sunPulse 5s ease-in-out infinite 0.5s;
+}
+/* Outer halo — bleeds into space */
+.sun-glow-3 {
+  position: absolute;
+  inset: -200%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 180, 40, 0.06) 5%, rgba(255, 140, 20, 0.02) 20%, transparent 45%);
+  filter: blur(35px);
   z-index: 0;
   pointer-events: none;
 }
-
-/* Detail Card — glassmorphism */
-.planet-detail {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  text-align: center;
-  z-index: 20;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
-  pointer-events: none;
-  background: rgba(12, 14, 22, 0.88);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius);
-  padding: 22px 30px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-  max-width: 360px;
-  width: max-content;
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
-.planet-detail.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
-.planet-detail .detail-icon { font-size: 24px; margin-bottom: 8px; }
-.planet-detail .detail-title {
+
+/* ── Orbit Paths — one per planet, concentric ellipses ── */
+.orbit-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.03);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+/* Each orbit gets sized by JS to match real eccentricity */
+.orbit-path[data-orbit="0"],
+.orbit-path[data-orbit="1"],
+.orbit-path[data-orbit="2"],
+.orbit-path[data-orbit="3"],
+.orbit-path[data-orbit="4"],
+.orbit-path[data-orbit="5"],
+.orbit-path[data-orbit="6"],
+.orbit-path[data-orbit="7"] {
+  /* width, height, and margin-left set by JS */
+}
+
+/* ── Planet Nodes ── */
+.planet-node {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  transition: filter 0.3s, transform 0.3s var(--ease-out);
+  z-index: 8;
+}
+.planet-node:hover {
+  filter: brightness(1.25) drop-shadow(0 0 14px rgba(200,200,240,0.3));
+  transform: scale(1.2);
+  z-index: 30;
+}
+.planet-node img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.planet-node::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,200,220,0.05) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Planet label */
+.planet-label {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(240,239,233,0.5);
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 0;
+  left: 50%;
+  top: calc(100% + 6px);
+  transform: translateX(-50%);
+}
+
+/* ── Info Card ── */
+.planet-info-card {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none; /* ALWAYS none — never blocks planets */
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  z-index: 100;
+  background: rgba(12, 14, 24, 0.88);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 18px 22px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  width: 270px;
+  text-align: left;
+  transform: translateY(6px);
+}
+.planet-info-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  /* Keep pointer-events: none even when visible */
+}
+.planet-info-card .info-planet {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(200, 170, 110, 0.6);
+  margin-bottom: 6px;
+}
+.planet-info-card .info-title {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 17px;
   color: #f0efe9;
   margin-bottom: 6px;
-  line-height: 1.25;
+  line-height: 1.3;
 }
-.planet-detail .detail-desc {
-  font-size: 13px;
+.planet-info-card .info-desc {
+  font-size: 12.5px;
   color: rgba(240,239,233,0.5);
   line-height: 1.55;
 }
+/* Arrow removed — card flips above/below dynamically */
 
-/* Mobile fallback */
+.planet-detail { display: none; }
+
+/* ── Mobile ── */
 @media (max-width: 700px) {
   .services-inner { padding: 140px 16px 160px; }
-  .planet-scene { padding: 40px 0 60px; flex-direction: column; }
-  .planet-img-wrap { width: clamp(200px, 60vw, 300px); }
-  .planet-detail { display: none; }
+  .planet-scene { aspect-ratio: auto; padding: 40px 0; }
+  .sun-wrap, .orbit-path, .planet-node, .planet-info-card { display: none; }
   .mobile-services-list {
     display: flex;
     flex-direction: column;
@@ -736,7 +748,6 @@ section {
     background: rgba(255,255,255,0.06);
     border-radius: var(--radius);
     overflow: hidden;
-    margin-top: 32px;
     width: 100%;
   }
   .mobile-service-item {
@@ -745,7 +756,12 @@ section {
     gap: 14px;
     padding: 18px 22px;
     background: rgba(15,18,28,0.7);
-    font-size: 18px;
+  }
+  .mobile-service-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
   .mobile-service-item .mob-title {
     font-family: var(--font-body);
@@ -756,6 +772,10 @@ section {
 }
 @media (min-width: 701px) {
   .mobile-services-list { display: none; }
+}
+@media (max-width: 900px) and (min-width: 701px) {
+  .planet-info-card { width: 230px; padding: 14px 18px; }
+  .planet-info-card .info-title { font-size: 15px; }
 }
 
 /* ── Scroll Story ── */
@@ -884,12 +904,8 @@ section {
   inset: 0;
   background-image: radial-gradient(circle, var(--text-tertiary) 0.5px, transparent 0.5px);
   background-size: 24px 24px;
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-[data-theme="dark"] .booking::before {
   opacity: 0.08;
+  pointer-events: none;
 }
 
 .booking-inner {
@@ -1272,8 +1288,8 @@ section {
 </head>
 <body>
 
-<!-- Neural Canvas Background -->
-<canvas id="neural-canvas"></canvas>
+<!-- Global Starfield Background -->
+<canvas id="starfield-bg"></canvas>
 
 <!-- Navigation -->
 <nav class="nav" id="nav">
@@ -1369,28 +1385,46 @@ section {
       <div class="section-label">What I can help with</div>
       <h2><span class="lightpass-text" data-lightpass>Practical AI skills<br>you can use today</span></h2>
       <p class="services-sub">Everything taught simply, with real examples you'll actually use.</p>
+      <p class="services-sub" style="margin-top: 12px; font-size: 13px; color: rgba(200, 170, 110, 0.45); letter-spacing: 0.03em;">Click on a planet to explore each skill</p>
     </div>
 
     <div class="planet-scene reveal" id="planetScene">
-      <div class="planet-ambient"></div>
-      <div class="planet-img-wrap">
-        <!--
-          REPLACE THIS SRC WITH YOUR JUPITER IMAGE FILE PATH
-          e.g. src="jupiter.png" or src="images/jupiter.png"
-          Recommended: transparent-background PNG, 800×800 or larger
-          NASA images are public domain — free to use.
-        -->
-        <img src="jupiter.png" alt="Jupiter" id="planetImg">
+      <!-- The Sun -->
+      <div class="sun-wrap">
+        <div class="sun-glow-3"></div>
+        <div class="sun-glow-2"></div>
+        <div class="sun-glow-1"></div>
+        <img src="sun.png" alt="The Sun">
       </div>
 
-      <!-- Detail card (for moons later) -->
-      <div class="planet-detail" id="planetDetail">
-        <div class="detail-icon" id="pDetailIcon"></div>
-        <div class="detail-title" id="pDetailTitle"></div>
-        <div class="detail-desc" id="pDetailDesc"></div>
+      <!-- 8 orbit paths — concentric ellipses -->
+      <div class="orbit-path" data-orbit="0"></div>
+      <div class="orbit-path" data-orbit="1"></div>
+      <div class="orbit-path" data-orbit="2"></div>
+      <div class="orbit-path" data-orbit="3"></div>
+      <div class="orbit-path" data-orbit="4"></div>
+      <div class="orbit-path" data-orbit="5"></div>
+      <div class="orbit-path" data-orbit="6"></div>
+      <div class="orbit-path" data-orbit="7"></div>
+
+      <!-- 8 planets — positioned by JS on their individual orbits -->
+      <div class="planet-node" data-planet="0"><img src="mercury.png" alt="Mercury"><div class="planet-label">Mercury</div></div>
+      <div class="planet-node" data-planet="1"><img src="venus.png" alt="Venus"><div class="planet-label">Venus</div></div>
+      <div class="planet-node" data-planet="2"><img src="earth.png" alt="Earth"><div class="planet-label">Earth</div></div>
+      <div class="planet-node" data-planet="3"><img src="mars.png" alt="Mars"><div class="planet-label">Mars</div></div>
+      <div class="planet-node" data-planet="4"><img src="jupiter.png" alt="Jupiter"><div class="planet-label">Jupiter</div></div>
+      <div class="planet-node" data-planet="5"><img src="saturn.png" alt="Saturn"><div class="planet-label">Saturn</div></div>
+      <div class="planet-node" data-planet="6"><img src="uranus.png" alt="Uranus"><div class="planet-label">Uranus</div></div>
+      <div class="planet-node" data-planet="7"><img src="neptune.png" alt="Neptune"><div class="planet-label">Neptune</div></div>
+
+      <!-- Info card -->
+      <div class="planet-info-card" id="planetInfoCard">
+        <div class="info-planet" id="infoCardPlanet"></div>
+        <div class="info-title" id="infoCardTitle"></div>
+        <div class="info-desc" id="infoCardDesc"></div>
       </div>
 
-      <!-- Mobile fallback list -->
+      <!-- Mobile fallback -->
       <div class="mobile-services-list" id="mobileServicesList"></div>
     </div>
   </div>
@@ -1532,66 +1566,133 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// ── Neural Canvas ──
-const canvas = document.getElementById('neural-canvas');
+// ══════════════════════════════════════════
+// GLOBAL STARFIELD + CONSTELLATIONS
+// Fixed full-page canvas with twinkling stars
+// and subtle constellation lines connecting
+// nearby bright stars.
+// ══════════════════════════════════════════
+const canvas = document.getElementById('starfield-bg');
 const ctx = canvas.getContext('2d');
-let nodes = [];
-const NODE_COUNT = 50;
-const CONNECTION_DIST = 180;
+let stars = [];
+let constellationStars = []; // brighter subset used for constellation lines
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-for (let i = 0; i < NODE_COUNT; i++) {
-  nodes.push({
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
-    vx: (Math.random() - 0.5) * 0.25,
-    vy: (Math.random() - 0.5) * 0.25,
-    r: Math.random() * 1.5 + 0.5
-  });
+  generateStars();
 }
 
-function drawNeural() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  const nodeColor = isDark ? 'rgba(240,239,236,0.07)' : 'rgba(26,26,24,0.07)';
-  const lineColor = isDark ? 'rgba(240,239,236,0.025)' : 'rgba(26,26,24,0.025)';
+function generateStars() {
+  const w = canvas.width;
+  const h = canvas.height;
+  const area = w * h;
+  const count = Math.floor(area / 1200); // dense starfield
 
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    a.x += a.vx;
-    a.y += a.vy;
-    if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
-    if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
+  stars = [];
+  constellationStars = [];
 
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
+  for (let i = 0; i < count; i++) {
+    const brightness = Math.random();
+    const star = {
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: brightness > 0.97 ? 1.8 + Math.random() * 0.8 : // rare bright stars
+         brightness > 0.85 ? 1.0 + Math.random() * 0.6 :  // medium stars
+         0.3 + Math.random() * 0.5,                         // dim stars
+      baseAlpha: brightness > 0.9 ? 0.5 + Math.random() * 0.4 :
+                 brightness > 0.7 ? 0.2 + Math.random() * 0.3 :
+                 0.08 + Math.random() * 0.15,
+      twinkleSpeed: 0.0005 + Math.random() * 0.003,
+      twinkleOffset: Math.random() * Math.PI * 2,
+      // Slight colour tint for brighter stars
+      tint: brightness > 0.95 ? (Math.random() > 0.5 ? 'warm' : 'cool') : 'white',
+    };
+    stars.push(star);
+
+    // Collect brighter stars for constellation lines
+    if (star.baseAlpha > 0.4 && star.r > 1.0) {
+      constellationStars.push(star);
+    }
+  }
+}
+
+// Pre-compute constellation connections (nearest neighbours)
+function getConstellationLines() {
+  const lines = [];
+  const maxDist = 180;
+  const maxConnections = 2; // max lines per star
+
+  for (let i = 0; i < constellationStars.length; i++) {
+    const a = constellationStars[i];
+    let connections = 0;
+
+    for (let j = i + 1; j < constellationStars.length; j++) {
+      if (connections >= maxConnections) break;
+      const b = constellationStars[j];
       const dx = a.x - b.x;
       const dy = a.y - b.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < CONNECTION_DIST) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = lineColor;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
+
+      if (dist < maxDist) {
+        lines.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y, dist });
+        connections++;
       }
     }
+  }
+  return lines;
+}
+
+let constellationLines = [];
+
+function drawStarfield(t) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw constellation lines first (behind stars)
+  ctx.lineWidth = 0.5;
+  for (const line of constellationLines) {
+    const alpha = 0.06 + Math.sin(t * 0.0003 + line.x1) * 0.02;
+    ctx.beginPath();
+    ctx.moveTo(line.x1, line.y1);
+    ctx.lineTo(line.x2, line.y2);
+    ctx.strokeStyle = `rgba(180, 200, 240, ${Math.max(0.02, alpha)})`;
+    ctx.stroke();
+  }
+
+  // Draw stars
+  for (const s of stars) {
+    const twinkle = Math.sin(t * s.twinkleSpeed + s.twinkleOffset);
+    const alpha = s.baseAlpha + twinkle * 0.15;
+
+    let r = 220, g = 225, b = 240;
+    if (s.tint === 'warm') { r = 255; g = 220; b = 180; }
+    else if (s.tint === 'cool') { r = 180; g = 210; b = 255; }
 
     ctx.beginPath();
-    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-    ctx.fillStyle = nodeColor;
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${Math.max(0.03, alpha)})`;
     ctx.fill();
+
+    // Glow for bright stars
+    if (s.r > 1.4) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.max(0, alpha * 0.12)})`;
+      ctx.fill();
+    }
   }
-  requestAnimationFrame(drawNeural);
+
+  requestAnimationFrame(drawStarfield);
 }
-drawNeural();
+
+resizeCanvas();
+constellationLines = getConstellationLines();
+requestAnimationFrame(drawStarfield);
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  constellationLines = getConstellationLines();
+});
 
 // ══════════════════════════════════════════
 // 1. TEXT SCRAMBLE / DECODE — FAST
@@ -1748,96 +1849,243 @@ const revealObserver = new IntersectionObserver((entries) => {
 reveals.forEach(el => revealObserver.observe(el));
 
 // ══════════════════════════════════════════
-// PLANET — Image-based (moons to be added later)
-// Mobile fallback list builder
+// SOLAR SYSTEM — Individual Orbits
+// Each planet orbits at its own radius and speed.
+// Inner planets orbit faster, outer slower
+// (Kepler-style). Sticky hover with info card.
 // ══════════════════════════════════════════
-const skillMoons = [
-  { icon: '💬', title: 'Using ChatGPT effectively', desc: 'Go beyond basic questions and get consistently useful answers.' },
-  { icon: '🧭', title: 'Understanding AI tools', desc: 'Claude, Perplexity, Gemini — what they do and when to use each.' },
-  { icon: '✍️', title: 'Writing better prompts', desc: 'Small changes in how you ask can completely change what you get.' },
-  { icon: '📧', title: 'Emails & writing', desc: 'Draft, refine, and edit text faster without losing your voice.' },
-  { icon: '🔍', title: 'Research & planning', desc: 'Use AI to gather, compare, and organise information properly.' },
-  { icon: '💡', title: 'Brainstorming ideas', desc: 'AI as a creative thinking partner for projects and decisions.' },
-  { icon: '🛠️', title: 'Learning new tools', desc: 'Hands-on walkthrough of any AI tool you\'re curious about.' },
-  { icon: '⚡', title: 'Simple AI workflows', desc: 'Build small, useful routines that save you real time.' },
+const planets = [
+  // Real orbital eccentricities (0 = circle, 1 = line)
+  // Speeds roughly proportional to real orbital period ratios
+  // startAngle: random scatter so they're not lined up
+  { name: 'Mercury', title: 'Prompt Engineering', desc: 'Master the art of talking to AI to get perfect results every time.', size: 22, orbitPct: 0.14, speed: 0.00030, eccentricity: 0.205, startAngle: 1.2, img: 'mercury.png' },
+  { name: 'Venus', title: 'AI Data Analysis', desc: 'Turn messy spreadsheets into clear insights and professional charts in seconds.', size: 28, orbitPct: 0.18, speed: 0.00019, eccentricity: 0.007, startAngle: 4.1, img: 'venus.png' },
+  { name: 'Earth', title: 'Automated Workflows', desc: 'Connect your favourite apps to AI to handle repetitive tasks on autopilot.', size: 30, orbitPct: 0.22, speed: 0.00015, eccentricity: 0.017, startAngle: 2.7, img: 'earth.png' },
+  { name: 'Mars', title: 'Generative Content', desc: 'Learn to create high-end images, videos, and copy for brands and social media.', size: 25, orbitPct: 0.26, speed: 0.00011, eccentricity: 0.093, startAngle: 5.5, img: 'mars.png' },
+  { name: 'Jupiter', title: 'AI Coding Assistant', desc: 'Use AI to write, debug, and optimise code, even if you aren\'t a developer.', size: 48, orbitPct: 0.31, speed: 0.000065, eccentricity: 0.049, startAngle: 0.4, img: 'jupiter.png' },
+  { name: 'Saturn', title: 'AI for Research', desc: 'Find, summarise, and compare information from any source in a fraction of the time.', size: 42, orbitPct: 0.36, speed: 0.000045, eccentricity: 0.057, startAngle: 3.3, img: 'saturn.png' },
+  { name: 'Uranus', title: 'AI Writing & Editing', desc: 'Draft, refine, and polish emails, essays, and documents without losing your voice.', size: 34, orbitPct: 0.42, speed: 0.000030, eccentricity: 0.046, startAngle: 5.9, img: 'uranus.png' },
+  { name: 'Neptune', title: 'Custom AI Chatbots', desc: 'Build your own AI assistants tailored to your business, workflow, or personal needs.', size: 32, orbitPct: 0.48, speed: 0.000020, eccentricity: 0.010, startAngle: 1.8, img: 'neptune.png' },
 ];
 
+const PLANET_COUNT = planets.length;
+const BASE_ELLIPSE_RATIO = 2.2; // base width:height for the orbit view angle
+
+// Set planet sizes
+const planetNodes = document.querySelectorAll('.planet-node');
+planetNodes.forEach((node, i) => {
+  if (planets[i]) {
+    node.style.width = planets[i].size + 'px';
+    node.style.height = planets[i].size + 'px';
+  }
+});
+
+// Size orbit path ellipses to match real eccentricities
+function sizeOrbitPaths() {
+  const sceneEl = document.getElementById('planetScene');
+  if (!sceneEl) return;
+  const sw = sceneEl.offsetWidth;
+  document.querySelectorAll('.orbit-path').forEach(path => {
+    const idx = parseInt(path.dataset.orbit);
+    if (idx >= 0 && idx < planets.length) {
+      const p = planets[idx];
+      const a = sw * p.orbitPct; // semi-major axis
+      const bReal = a * Math.sqrt(1 - p.eccentricity * p.eccentricity);
+      const bView = bReal / BASE_ELLIPSE_RATIO;
+      const w = a * 2;
+      const h = bView * 2;
+      path.style.width = w + 'px';
+      path.style.height = h + 'px';
+      // Offset left to account for sun at focus (not centre)
+      const focusOffset = a * p.eccentricity;
+      path.style.marginLeft = -focusOffset + 'px';
+    }
+  });
+}
+sizeOrbitPaths();
+window.addEventListener('resize', sizeOrbitPaths);
+
+// Mobile fallback
 const mobList = document.getElementById('mobileServicesList');
 if (mobList) {
-  skillMoons.forEach(m => {
+  planets.forEach(p => {
     const d = document.createElement('div');
     d.className = 'mobile-service-item';
-    d.innerHTML = `<span>${m.icon}</span><span class="mob-title">${m.title}</span>`;
+    d.innerHTML = `<img src="${p.img}" alt="${p.name}"><span class="mob-title">${p.title}</span>`;
     mobList.appendChild(d);
   });
 }
 
-// ══════════════════════════════════════════
-// STARFIELD — Canvas rendering for the
-// services space section. Twinkling stars
-// with varied sizes, brightness, and twinkle speed.
-// Only renders when section is near viewport.
-// ══════════════════════════════════════════
-const starCanvas = document.getElementById('starfieldCanvas');
-const starCtx = starCanvas ? starCanvas.getContext('2d') : null;
-let stars = [];
-let starAnimFrame = null;
-let starfieldActive = false;
+// Orbit animation
+const planetScene = document.getElementById('planetScene');
+const planetInfoCard = document.getElementById('planetInfoCard');
+const infoCardPlanet = document.getElementById('infoCardPlanet');
+const infoCardTitle = document.getElementById('infoCardTitle');
+const infoCardDesc = document.getElementById('infoCardDesc');
+let lockedPlanetIdx = -1;   // click-locked planet (persists)
+let hoveredPlanetIdx = -1;  // hover-preview planet (temporary)
+let orbitActive = false;
 
-function initStarfield() {
-  if (!starCanvas) return;
-  const rect = starCanvas.parentElement.getBoundingClientRect();
-  starCanvas.width = rect.width;
-  starCanvas.height = rect.height;
+function positionPlanets(timestamp) {
+  if (!planetScene || !orbitActive) return;
 
-  stars = [];
-  const count = Math.floor((rect.width * rect.height) / 1800); // density
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random() * rect.width,
-      y: Math.random() * rect.height,
-      r: Math.random() * 1.4 + 0.3,
-      baseAlpha: Math.random() * 0.6 + 0.15,
-      twinkleSpeed: Math.random() * 0.003 + 0.001,
-      twinkleOffset: Math.random() * Math.PI * 2,
-    });
-  }
-}
+  const scene = planetScene.getBoundingClientRect();
+  const sceneCX = scene.width / 2;
+  const sceneCY = scene.height / 2;
 
-function drawStarfield(t) {
-  if (!starCtx || !starfieldActive) return;
-  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+  // Locked takes priority over hovered
+  const activePlanet = lockedPlanetIdx >= 0 ? lockedPlanetIdx : hoveredPlanetIdx;
 
-  for (const s of stars) {
-    const twinkle = Math.sin(t * s.twinkleSpeed + s.twinkleOffset);
-    const alpha = s.baseAlpha + twinkle * 0.2;
-    starCtx.beginPath();
-    starCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    starCtx.fillStyle = `rgba(220, 225, 240, ${Math.max(0.05, alpha)})`;
-    starCtx.fill();
-  }
+  planetNodes.forEach((node, i) => {
+    const p = planets[i];
 
-  starAnimFrame = requestAnimationFrame(drawStarfield);
-}
+    // Semi-major axis (horizontal radius of orbit in this view)
+    const a = scene.width * p.orbitPct;
+    // Semi-minor axis: account for both viewing angle AND real eccentricity
+    // Real orbit eccentricity makes the ellipse wider/narrower
+    // b = a * sqrt(1 - e²), then also squash by view angle
+    const bReal = a * Math.sqrt(1 - p.eccentricity * p.eccentricity);
+    const bView = bReal / BASE_ELLIPSE_RATIO;
 
-// Only run starfield when section is visible
-const starfieldObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      if (!starfieldActive) {
-        starfieldActive = true;
-        initStarfield();
-        starAnimFrame = requestAnimationFrame(drawStarfield);
-      }
+    // Mean anomaly — uniform angular speed
+    const M = timestamp * p.speed + p.startAngle;
+
+    // Solve Kepler's equation: E - e*sin(E) = M
+    // Simple iterative solution (3 iterations is plenty for small e)
+    let E = M;
+    for (let k = 0; k < 4; k++) {
+      E = M + p.eccentricity * Math.sin(E);
+    }
+
+    // True anomaly from eccentric anomaly
+    const sinE = Math.sin(E);
+    const cosE = Math.cos(E);
+    // Position on the ellipse (with sun at focus, not centre)
+    const xOrbit = a * (cosE - p.eccentricity);
+    const yOrbit = bView * sinE;
+
+    const x = sceneCX + xOrbit - p.size / 2;
+    const y = sceneCY + yOrbit - p.size / 2;
+
+    node.style.left = x + 'px';
+    node.style.top = y + 'px';
+
+    // Highlight active
+    if (i === activePlanet) {
+      node.style.filter = 'brightness(1.25) drop-shadow(0 0 14px rgba(200,200,240,0.3))';
+      node.style.transform = 'scale(1.2)';
+      node.style.zIndex = '30';
     } else {
-      starfieldActive = false;
-      if (starAnimFrame) cancelAnimationFrame(starAnimFrame);
+      node.style.filter = '';
+      node.style.transform = '';
+      node.style.zIndex = '8';
+    }
+
+    // Label
+    const label = node.querySelector('.planet-label');
+    if (label) {
+      label.style.opacity = (i === activePlanet) ? '1' : '0';
+      label.style.color = 'rgba(240,239,233,0.8)';
+    }
+
+    // Smart info card positioning
+    if (i === activePlanet && planetInfoCard) {
+      const nodeRect = node.getBoundingClientRect();
+      const cardW = 270;
+      const cardH = planetInfoCard.offsetHeight || 120;
+
+      let cardLeft = nodeRect.left + nodeRect.width / 2 - cardW / 2;
+      cardLeft = Math.max(12, Math.min(window.innerWidth - cardW - 12, cardLeft));
+
+      const spaceAbove = nodeRect.top;
+
+      if (spaceAbove > cardH + 16) {
+        planetInfoCard.style.left = cardLeft + 'px';
+        planetInfoCard.style.top = (nodeRect.top - cardH - 10) + 'px';
+        planetInfoCard.style.transform = 'none';
+      } else {
+        planetInfoCard.style.left = cardLeft + 'px';
+        planetInfoCard.style.top = (nodeRect.bottom + 10) + 'px';
+        planetInfoCard.style.transform = 'none';
+      }
     }
   });
-}, { threshold: 0.0, rootMargin: '100px' });
 
-if (starCanvas) starfieldObs.observe(starCanvas.parentElement);
-window.addEventListener('resize', () => { if (starfieldActive) initStarfield(); });
+  requestAnimationFrame(positionPlanets);
+}
+
+function showInfoCard(i) {
+  infoCardPlanet.textContent = planets[i].name;
+  infoCardTitle.textContent = planets[i].title;
+  infoCardDesc.textContent = planets[i].desc;
+  planetInfoCard.classList.add('visible');
+}
+
+function hideInfoCard() {
+  planetInfoCard.classList.remove('visible');
+}
+
+// Hover: preview (only if nothing is click-locked)
+planetNodes.forEach((node, i) => {
+  node.addEventListener('mouseenter', () => {
+    hoveredPlanetIdx = i;
+    if (lockedPlanetIdx < 0) {
+      showInfoCard(i);
+    }
+  });
+  node.addEventListener('mouseleave', () => {
+    hoveredPlanetIdx = -1;
+    // Only hide if this planet isn't click-locked
+    if (lockedPlanetIdx < 0) {
+      setTimeout(() => {
+        if (hoveredPlanetIdx < 0 && lockedPlanetIdx < 0) {
+          hideInfoCard();
+        }
+      }, 50);
+    }
+  });
+
+  // Click: lock this planet — card stays and tracks it
+  node.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (lockedPlanetIdx === i) {
+      // Clicking same planet again unlocks it
+      lockedPlanetIdx = -1;
+      hideInfoCard();
+    } else {
+      lockedPlanetIdx = i;
+      showInfoCard(i);
+    }
+  });
+});
+
+// Click anywhere else in the scene: dismiss locked planet
+if (planetScene) {
+  planetScene.addEventListener('click', (e) => {
+    // Only dismiss if clicking empty space (not a planet)
+    if (!e.target.closest('.planet-node')) {
+      lockedPlanetIdx = -1;
+      hoveredPlanetIdx = -1;
+      hideInfoCard();
+    }
+  });
+}
+
+// Visibility observer
+const orbitObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !orbitActive) {
+      orbitActive = true;
+      requestAnimationFrame(positionPlanets);
+    } else if (!e.isIntersecting) {
+      orbitActive = false;
+    }
+  });
+}, { threshold: 0, rootMargin: '200px' });
+
+if (planetScene) orbitObs.observe(planetScene);
+
+// (Services starfield removed — global starfield handles entire page)
 
 // ══════════════════════════════════════════
 // 2. GRADIENT LIGHT PASS
