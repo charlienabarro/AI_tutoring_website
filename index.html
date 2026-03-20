@@ -945,6 +945,140 @@ section {
 .stagger-reveal.visible > *:nth-child(7) { transition-delay: 480ms; }
 .stagger-reveal.visible > *:nth-child(8) { transition-delay: 560ms; }
 
+/* ── Text Scramble (replaces hero word reveal) ── */
+.scramble-char {
+  display: inline-block;
+  transition: color 0.06s;
+}
+.scramble-char.decoding {
+  color: var(--text-tertiary);
+}
+.scramble-char.space {
+  width: 0.3em;
+}
+
+/* ── Gradient Light Pass ── */
+.lightpass-text {
+  display: inline;
+  background: linear-gradient(
+    105deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 35%,
+    var(--text-secondary) 42%,
+    var(--text-tertiary) 50%,
+    var(--text-secondary) 58%,
+    var(--text-primary) 65%,
+    var(--text-primary) 100%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lightpass-text.active {
+  animation: lightpassSweep 2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+@keyframes lightpassSweep {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* ── Scroll Velocity Blur ── */
+.blur-target {
+  will-change: filter;
+}
+
+/* ── Parallax Depth ── */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* ── Number Roll (booking price) ── */
+.price-roll-wrap {
+  display: inline-flex;
+  align-items: flex-start;
+  overflow: hidden;
+  height: 1.2em;
+  vertical-align: bottom;
+}
+.price-roll-wrap .digit-col {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.price-roll-wrap .digit-col span {
+  font-family: var(--font-display);
+  font-size: inherit;
+  line-height: 1.2;
+  height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Magnetic Buttons ── */
+[data-magnetic] {
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+[data-magnetic] .btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── Focus Spotlight on Scroll Story ── */
+.scroll-story-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--scroll-bg);
+}
+.spotlight-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 55% 55% at 50% 50%,
+    transparent 0%,
+    var(--bg) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.scroll-story-sticky.spotlight-active .spotlight-vignette {
+  opacity: 0.55;
+}
+/* Warm glow behind scroll phrases */
+.spotlight-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 170, 110, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+[data-theme="dark"] .spotlight-glow {
+  background: radial-gradient(circle, rgba(200, 170, 110, 0.05) 0%, transparent 70%);
+}
+.scroll-story-sticky.spotlight-active .spotlight-glow {
+  opacity: 1;
+}
+
 /* ── Animations ── */
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
@@ -992,7 +1126,7 @@ section {
         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a href="#booking" class="nav-book">Book a session</a>
+      <a href="#booking" class="nav-book" data-magnetic><span class="btn-inner">Book a session</span></a>
     </div>
   </div>
 </nav>
@@ -1003,14 +1137,14 @@ section {
     <div class="hero-content">
       <div class="hero-text">
         <div class="hero-label">One-to-one sessions</div>
-        <h1 id="heroHeadline"><span class="hero-word">Learn</span> <span class="hero-word">how</span> <span class="hero-word">to</span> <em><span class="hero-word">actually</span></em> <span class="hero-word">use</span> <span class="hero-word">AI</span></h1>
+        <h1 id="heroHeadline" data-scramble="Learn how to actually use AI">Learn how to actually use AI</h1>
         <p class="hero-sub">Personal one-to-one help to understand and use modern AI tools in real life.</p>
         <div class="hero-buttons">
-          <a href="#booking" class="btn-primary">
-            Book a session
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <a href="#booking" class="btn-primary" data-magnetic>
+            <span class="btn-inner">Book a session
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
           </a>
-          <a href="#services" class="btn-secondary">See how it works</a>
+          <a href="#services" class="btn-secondary" data-magnetic><span class="btn-inner">See how it works</span></a>
         </div>
       </div>
       <div class="hero-demo">
@@ -1059,7 +1193,7 @@ section {
   <div class="container">
     <div class="about-inner reveal">
       <div class="section-label">About</div>
-      <p class="about-text">
+      <p class="about-text blur-target">
         Hi, I'm Charlie. I'm a Computer Science student at Durham, <span>on track for a First,</span> and I spend a lot of time working with AI tools. I've noticed that many people are curious about AI but don't really know where to start. <span>That's what I help with</span> — showing people how these tools actually work and how they can be genuinely useful in everyday life.
       </p>
     </div>
@@ -1071,7 +1205,7 @@ section {
   <div class="container">
     <div class="services-header stagger-reveal">
       <div class="section-label">What I can help with</div>
-      <h2>Practical AI skills<br>you can use today</h2>
+      <h2><span class="lightpass-text" data-lightpass>Practical AI skills<br>you can use today</span></h2>
       <p class="services-sub">Everything taught simply, with real examples you'll actually use.</p>
     </div>
     <div class="services-grid stagger-reveal">
@@ -1122,6 +1256,8 @@ section {
 <!-- Scroll Storytelling -->
 <section class="scroll-story" id="scroll-story">
   <div class="scroll-story-sticky">
+    <div class="spotlight-vignette"></div>
+    <div class="spotlight-glow"></div>
     <div class="scroll-phrase" id="phrase0">AI can feel <em>confusing</em></div>
     <div class="scroll-phrase" id="phrase1">But it can be incredibly <em>useful</em></div>
     <div class="scroll-phrase" id="phrase2">If you know how to use it</div>
@@ -1153,7 +1289,7 @@ section {
               <div class="session-info-title">Standard session</div>
               <div class="session-info-detail">1 hour · Online via Zoom</div>
             </div>
-            <div class="session-price">£40</div>
+            <div class="session-price" id="priceRoll">£<span class="price-roll-wrap"><span class="digit-col" id="digitTens"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span></span><span class="digit-col" id="digitOnes"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span></span></span></div>
           </div>
           <div class="session-card">
             <div class="session-info">
@@ -1199,7 +1335,7 @@ section {
             <label>Anything else? (optional)</label>
             <textarea placeholder="Tell me a bit about what you'd like to learn…"></textarea>
           </div>
-          <button type="submit" class="form-submit">Send enquiry</button>
+          <button type="submit" class="form-submit" data-magnetic><span class="btn-inner">Send enquiry</span></button>
         </form>
       </div>
     </div>
@@ -1314,7 +1450,59 @@ function drawNeural() {
 }
 drawNeural();
 
-// ── Hero Typing Animation ──
+// ══════════════════════════════════════════
+// 1. TEXT SCRAMBLE / DECODE — FAST
+// ══════════════════════════════════════════
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.target = el.getAttribute('data-scramble');
+    this.glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#&*!?';
+    this.done = false;
+  }
+  run() {
+    if (this.done) return;
+    this.done = true;
+    const t = this.target, len = t.length;
+    const total = Math.ceil(len * 1.4); // fast sweep
+    let frame = 0;
+    this.el.innerHTML = '';
+    const spans = [];
+    for (let i = 0; i < len; i++) {
+      const s = document.createElement('span');
+      s.className = t[i] === ' ' ? 'scramble-char space' : 'scramble-char';
+      s.textContent = t[i] === ' ' ? '\u00A0' : this.rnd();
+      this.el.appendChild(s);
+      spans.push(s);
+    }
+    const tick = () => {
+      frame++;
+      const p = frame / total;
+      const resolved = Math.floor(p * len);
+      for (let i = 0; i < len; i++) {
+        if (t[i] === ' ') continue;
+        if (i < resolved) { spans[i].textContent = t[i]; spans[i].classList.remove('decoding'); }
+        else if (i < resolved + 2) { spans[i].textContent = this.rnd(); spans[i].classList.add('decoding'); }
+        else { spans[i].textContent = this.rnd(); spans[i].classList.remove('decoding'); }
+      }
+      if (frame < total) requestAnimationFrame(tick);
+      else for (let i = 0; i < len; i++) { spans[i].textContent = t[i] === ' ' ? '\u00A0' : t[i]; spans[i].classList.remove('decoding'); }
+    };
+    requestAnimationFrame(tick);
+  }
+  rnd() { return this.glyphs[Math.floor(Math.random() * this.glyphs.length)]; }
+}
+
+// Init hero scramble — fires on page load with slight delay
+const heroScramble = new TextScramble(document.getElementById('heroHeadline'));
+setTimeout(() => heroScramble.run(), 400);
+
+// Also fade in the hero sub and buttons after scramble
+setTimeout(() => {
+  document.querySelector('.hero-sub')?.classList.add('visible-force');
+}, 600);
+
+// ── Hero Typing Animation ── (preserved from original)
 const prompts = [
   { text: "Plan a trip to Rome", delay: 2500 },
   { text: "Write a cover letter", delay: 2500 },
@@ -1403,12 +1591,6 @@ function runCycle() {
 
 runCycle();
 
-// ── Hero Word-by-Word Reveal ──
-const heroWords = document.querySelectorAll('.hero-word');
-heroWords.forEach((word, i) => {
-  setTimeout(() => word.classList.add('revealed'), 350 + i * 100);
-});
-
 // ── Scroll Reveal (supports both .reveal and .stagger-reveal) ──
 const reveals = document.querySelectorAll('.reveal, .stagger-reveal');
 const revealObserver = new IntersectionObserver((entries) => {
@@ -1431,33 +1613,148 @@ document.querySelectorAll('.service-item').forEach(card => {
   });
 });
 
-// ── Scroll Storytelling (refined) ──
+// ══════════════════════════════════════════
+// 2. GRADIENT LIGHT PASS
+// ══════════════════════════════════════════
+const lightpassObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('active');
+      lightpassObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('[data-lightpass]').forEach(el => lightpassObs.observe(el));
+
+// ══════════════════════════════════════════
+// 3. SCROLL VELOCITY BLUR
+// Measures scroll speed, applies subtle
+// directional blur to .blur-target elements.
+// ══════════════════════════════════════════
+let lastScrollY = window.scrollY;
+let lastScrollTime = performance.now();
+let currentBlur = 0;
+
+function updateScrollBlur() {
+  const now = performance.now();
+  const dt = now - lastScrollTime;
+  if (dt < 10) { requestAnimationFrame(updateScrollBlur); return; }
+
+  const dy = Math.abs(window.scrollY - lastScrollY);
+  const speed = (dy / dt) * 16; // normalise to ~px/frame
+  lastScrollY = window.scrollY;
+  lastScrollTime = now;
+
+  const targetBlur = Math.min(speed * 0.4, 2.5); // max 2.5px — subtle
+  currentBlur += (targetBlur - currentBlur) * 0.25;
+  if (currentBlur < 0.05) currentBlur = 0;
+
+  const blurVal = currentBlur > 0.05 ? `blur(${currentBlur.toFixed(2)}px)` : 'none';
+  document.querySelectorAll('.blur-target').forEach(el => {
+    el.style.filter = blurVal;
+  });
+
+  requestAnimationFrame(updateScrollBlur);
+}
+requestAnimationFrame(updateScrollBlur);
+
+// ══════════════════════════════════════════
+// 4. PARALLAX DEPTH LAYERS
+// Service icons get subtle parallax shift.
+// ══════════════════════════════════════════
+const servicesSection = document.querySelector('.services');
+const serviceIcons = document.querySelectorAll('.service-icon');
+
+function updateParallax() {
+  if (!servicesSection) return;
+  const rect = servicesSection.getBoundingClientRect();
+  const center = rect.top + rect.height / 2;
+  const viewCenter = window.innerHeight / 2;
+  const offset = center - viewCenter;
+
+  serviceIcons.forEach((icon, i) => {
+    const depth = 0.02 + (i % 4) * 0.008; // vary depth per icon
+    const shift = offset * depth * -1;
+    icon.style.transform = `translateY(${shift}px)`;
+  });
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+updateParallax();
+
+// ══════════════════════════════════════════
+// 5. SMOOTH NUMBER ROLL (£40)
+// ══════════════════════════════════════════
+const digitTens = document.getElementById('digitTens');
+const digitOnes = document.getElementById('digitOnes');
+let priceRolled = false;
+
+function rollPrice() {
+  if (priceRolled) return;
+  priceRolled = true;
+  // Roll tens to 4, ones rolls through full cycle back to 0
+  const h = 1.2; // em — matches line-height
+  digitTens.style.transform = `translateY(-${4 * h}em)`;
+  digitOnes.style.transform = `translateY(-${10 * h}em)`;
+  // Snap ones back to 0 position after animation
+  setTimeout(() => {
+    digitOnes.style.transition = 'none';
+    digitOnes.style.transform = 'translateY(0)';
+    requestAnimationFrame(() => {
+      digitOnes.style.transition = 'transform 1s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+  }, 1050);
+}
+
+const priceObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) rollPrice(); });
+}, { threshold: 0.5 });
+const priceEl = document.getElementById('priceRoll');
+if (priceEl) priceObs.observe(priceEl);
+
+// ══════════════════════════════════════════
+// 6. MAGNETIC HOVER BUTTONS
+// Button + inner text shift toward cursor
+// with different intensities for springy feel.
+// ══════════════════════════════════════════
+document.querySelectorAll('[data-magnetic]').forEach(btn => {
+  const inner = btn.querySelector('.btn-inner');
+  const strength = 0.3;
+  const innerStrength = 0.12;
+
+  btn.addEventListener('mousemove', e => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+    if (inner) inner.style.transform = `translate(${x * innerStrength}px, ${y * innerStrength}px)`;
+  });
+
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0, 0)';
+    if (inner) inner.style.transform = 'translate(0, 0)';
+  });
+});
+
+// ══════════════════════════════════════════
+// 7. FOCUS SPOTLIGHT / VIGNETTE
+// Activates on scroll story section
+// ══════════════════════════════════════════
+const storySticky = document.querySelector('.scroll-story-sticky');
+
+// ── Scroll Storytelling (preserved + spotlight integration) ──
 const storySection = document.getElementById('scroll-story');
 const phrases = [0,1,2,3].map(i => document.getElementById('phrase' + i));
 const scrollHint = document.getElementById('scrollHint');
 const progressDots = document.querySelectorAll('.scroll-progress-dot');
 
-// Easing function for smoother interpolation within each phase
 function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 function easeInCubic(t) { return t * t * t; }
 
-/*
-  Layout of scroll progress (0 → 1) across 500vh of scroll:
-  
-  Each phrase gets a zone. Within each zone:
-    - enter phase  (fade in, slide up, unblur)
-    - hold phase   (fully visible, no change)
-    - exit phase   (fade out, slide up further, blur)
-  
-  First phrase starts partially visible so the section never looks blank.
-  Last phrase holds without exiting so it lingers.
-*/
-
 const PHRASE_COUNT = phrases.length;
-const ZONE = 1 / PHRASE_COUNT;          // 0.25 each
-const ENTER = 0.25;                      // fraction of zone for enter
-const HOLD  = 0.45;                      // fraction of zone for hold
-const EXIT  = 0.30;                      // fraction of zone for exit
+const ZONE = 1 / PHRASE_COUNT;
+const ENTER = 0.25;
+const HOLD  = 0.45;
+const EXIT  = 0.30;
 
 function updateScrollStory() {
   const rect = storySection.getBoundingClientRect();
@@ -1465,7 +1762,12 @@ function updateScrollStory() {
   const rawProgress = -rect.top / totalH;
   const progress = Math.max(0, Math.min(1, rawProgress));
 
-  // Scroll hint: fade out as user starts scrolling
+  // Spotlight: activate when scroll story is in view
+  if (storySticky) {
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    storySticky.classList.toggle('spotlight-active', inView && progress > 0.02);
+  }
+
   if (scrollHint) {
     const hintOpacity = Math.max(0, 1 - progress * 8);
     scrollHint.style.opacity = hintOpacity;
@@ -1479,79 +1781,47 @@ function updateScrollStory() {
     const exitEnd    = zoneStart + ZONE;
 
     let opacity = 0;
-    let yOffset = 24;    // px — enter from below
-    let blur = 6;        // px
+    let yOffset = 24;
+    let blur = 6;
 
     if (progress < zoneStart) {
-      // Before this phrase's zone — hidden below
-      opacity = 0;
-      yOffset = 24;
-      blur = 6;
+      opacity = 0; yOffset = 24; blur = 6;
     } else if (progress <= enterEnd) {
-      // Enter phase
       const t = easeOutCubic((progress - zoneStart) / (enterEnd - zoneStart));
-      opacity = t;
-      yOffset = 24 * (1 - t);
-      blur = 6 * (1 - t);
+      opacity = t; yOffset = 24 * (1 - t); blur = 6 * (1 - t);
     } else if (progress <= holdEnd) {
-      // Hold phase — fully visible
-      opacity = 1;
-      yOffset = 0;
-      blur = 0;
+      opacity = 1; yOffset = 0; blur = 0;
     } else if (i === PHRASE_COUNT - 1) {
-      // Last phrase: hold indefinitely, don't exit
-      opacity = 1;
-      yOffset = 0;
-      blur = 0;
+      opacity = 1; yOffset = 0; blur = 0;
     } else if (progress <= exitEnd) {
-      // Exit phase
       const t = easeInCubic((progress - holdEnd) / (exitEnd - holdEnd));
-      opacity = 1 - t;
-      yOffset = -16 * t; // exit upward
-      blur = 5 * t;
+      opacity = 1 - t; yOffset = -16 * t; blur = 5 * t;
     } else {
-      // Past this phrase's zone — hidden above
-      opacity = 0;
-      yOffset = -16;
-      blur = 5;
+      opacity = 0; yOffset = -16; blur = 5;
     }
 
-    // First phrase: start partially visible even at progress 0
-    // so the section never appears blank on entry
     if (i === 0 && progress <= zoneStart) {
-      // Section just entered viewport but scroll hasn't really started
-      // Show first phrase at partial opacity as an invitation
-      const preT = Math.max(0, Math.min(1, (rawProgress + 0.02) / 0.02));
       opacity = 0.35 + 0.65 * easeOutCubic(Math.max(0, (progress) / (ZONE * ENTER)));
       yOffset = 24 * (1 - Math.max(0, progress / (ZONE * ENTER)));
       blur = 6 * (1 - Math.max(0, progress / (ZONE * ENTER)));
-      if (rawProgress <= 0) {
-        opacity = 0.35;
-        yOffset = 6;
-        blur = 1;
-      }
+      if (rawProgress <= 0) { opacity = 0.35; yOffset = 6; blur = 1; }
     }
 
     el.style.opacity = opacity;
     el.style.transform = `translateY(${yOffset}px)`;
     el.style.filter = blur > 0.1 ? `blur(${blur}px)` : 'none';
 
-    // Update progress dots
     if (progressDots[i]) {
-      const isActive = opacity > 0.5;
-      progressDots[i].classList.toggle('active', isActive);
+      progressDots[i].classList.toggle('active', opacity > 0.5);
     }
   });
 
-  // Progress track visibility — fade in/out with section
   const trackEl = document.getElementById('scrollProgress');
   if (trackEl) {
-    const trackFade = progress > 0.01 && progress < 0.98 ? 1 : 0;
-    trackEl.style.opacity = trackFade;
+    trackEl.style.opacity = (progress > 0.01 && progress < 0.98) ? 1 : 0;
   }
 }
 
-// Use rAF-throttled scroll for buttery performance
 let scrollTicking = false;
 window.addEventListener('scroll', () => {
   if (!scrollTicking) {
@@ -1563,7 +1833,6 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// Initial call so it renders correctly if section is already in view
 updateScrollStory();
 
 // ── Smooth scroll for anchor links ──
